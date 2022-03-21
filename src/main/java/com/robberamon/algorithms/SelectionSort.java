@@ -1,4 +1,4 @@
-package main.java.com.robberamon.algorithms;
+package com.robberamon.algorithms;
 
 public class SelectionSort {
     // returns the amount of comparisons that happened
@@ -8,9 +8,9 @@ public class SelectionSort {
         for (int i = 0; i < length; i++) {
             int min = i;
             for (int j = i + 1; j  < length; j++) {
+                comparisons++;
                 if (data[j] < (data[min])) {
-                    min = j; // comparisons are happening here
-                    comparisons++;
+                    min = j;
                 }
             }
             int elem = data[i];
