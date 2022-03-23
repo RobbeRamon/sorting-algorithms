@@ -10,7 +10,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        runSelectionSort();
+        //runSelectionSort();
         runInsertionSort();
     }
 
@@ -42,11 +42,25 @@ public class Main {
         Map<Integer, Integer> comparisonsOverview = new TreeMap<>();
 
         for (int i = 5; i < 10000; i+=50) {
-            int[] data = generateRandomArray(i);
-            int comparisons = InsertionSort.sort(data);
-            comparisonsOverview.put(i, comparisons);
+            List<Integer> allComparisons = new ArrayList<>();
+
+            for (int j = 0; j < 10; j++) {
+                int[] data = generateRandomArray(i);
+                int comparisons = InsertionSort.sort(data);
+                allComparisons.add(comparisons);
+            }
+
+            int comparisonsMean = (int)allComparisons
+                    .stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
+
+            comparisonsOverview.put(i, comparisonsMean);
         }
 
-        CustomFileWriter.write(comparisonsOverview, "insertionsort");
+        String filename = "insertionsort";
+
+        CustomFileWriter.write(comparisonsOverview, filename);
     }
 }

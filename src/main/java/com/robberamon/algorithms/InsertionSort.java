@@ -1,6 +1,5 @@
 package com.robberamon.algorithms;
 
-import java.util.Arrays;
 
 public class InsertionSort {
     public static int sort(int[] data) {
