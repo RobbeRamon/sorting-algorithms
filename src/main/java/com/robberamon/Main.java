@@ -14,7 +14,9 @@ public class Main {
     public static void main(String[] args) {
         //runSelectionSort();
         //runInsertionSort();
-        runMergeSort();
+        //runInsertionSortForSpread();
+        runInsertionSortForSpread(50);
+        //runMergeSort();
         //runQuickSort();
         //smallRunQuickSort();
     }
@@ -40,6 +42,34 @@ public class Main {
         }
 
         CustomFileWriter.write(comparisonsOverview, "selectionsort");
+    }
+
+    private static void runInsertionSortForSpread() {
+        for (int j = 0; j < 15; j++) {
+            // key: array size, value: # comparisons
+            Map<Integer, Integer> comparisonsOverview = new TreeMap<>();
+
+            for (int i = 5; i < 10000; i+=50) {
+                int[] data = generateRandomArray(10000);
+                int comparisons = InsertionSort.sort(data);
+                comparisonsOverview.put(i, comparisons);
+            }
+
+            String filename = "insertionsort-" + j;
+
+            CustomFileWriter.write(comparisonsOverview, filename);
+        }
+    }
+
+    private static void runInsertionSortForSpread(int size) {
+        List<Integer> comparisonsList = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            int[] data = generateRandomArray(size);
+            int comparisons = InsertionSort.sort(data);
+            comparisonsList.add(comparisons);
+        }
+
+        CustomFileWriter.write(comparisonsList, "insertionsort-spread");
     }
 
     private static void runInsertionSort() {

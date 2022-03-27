@@ -24,4 +24,21 @@ public class CustomFileWriter {
             System.out.println("Could not write " + filename + " to file");
         }
     }
+
+    public static void write(List<Integer> data, String filename) {
+        List<String[]> formattedData = new ArrayList<>();
+
+        for (Integer value : data) {
+            String[] valueArray = new String[] {value.toString()};
+            formattedData.add(valueArray);
+        }
+
+        String location = "../" + filename + ".csv";
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(location))) {
+            writer.writeAll(formattedData, false);
+        } catch (IOException e) {
+            System.out.println("Could not write " + filename + " to file");
+        }
+    }
 }
