@@ -14,8 +14,8 @@ public class Main {
     public static void main(String[] args) {
         //runSelectionSort();
         //runInsertionSort();
-        //runMergeSort();
-        runQuickSort();
+        runMergeSort();
+        //runQuickSort();
         //smallRunQuickSort();
     }
 
@@ -73,18 +73,27 @@ public class Main {
         // key: array size, value: # comparisons
         Map<Integer, Integer> comparisonsOverview = new TreeMap<>();
 
-        int[] data = generateRandomArray(10);
-        int comparisons = MergeSort.sort(data);
-        System.out.println(comparisons);
-        System.out.println(Arrays.toString(data));
+        for (int i = 5; i < 10000; i+=50) {
+            List<Integer> allComparisons = new ArrayList<>();
 
-        /*for (int i = 5; i < 10000; i+=50) {
-            int[] data = generateRandomArray(i);
-            int comparisons = MergeSort.sort(data);
-            comparisonsOverview.put(i, comparisons);
-        }*/
+            for (int j = 0; j < 100; j++) {
+                int[] data = generateRandomArray(i);
+                int comparisons = MergeSort.sort(data);
+                allComparisons.add(comparisons);
+            }
 
-        //CustomFileWriter.write(comparisonsOverview, "mergesort");
+            int comparisonsMean = (int)allComparisons
+                    .stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
+
+            comparisonsOverview.put(i, comparisonsMean);
+        }
+
+        String filename = "mergesort";
+
+        CustomFileWriter.write(comparisonsOverview, filename);
     }
 
     private static void smallRunQuickSort() {
