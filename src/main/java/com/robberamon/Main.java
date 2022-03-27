@@ -3,6 +3,7 @@ package com.robberamon;
 
 import com.robberamon.algorithms.InsertionSort;
 import com.robberamon.algorithms.MergeSort;
+import com.robberamon.algorithms.QuickSort;
 import com.robberamon.algorithms.SelectionSort;
 import com.robberamon.helper.CustomFileWriter;
 
@@ -13,7 +14,9 @@ public class Main {
     public static void main(String[] args) {
         //runSelectionSort();
         //runInsertionSort();
-        runMergeSort();
+        //runMergeSort();
+        runQuickSort();
+        //smallRunQuickSort();
     }
 
     private static int[] generateRandomArray(int length) {
@@ -82,5 +85,43 @@ public class Main {
         }*/
 
         //CustomFileWriter.write(comparisonsOverview, "mergesort");
+    }
+
+    private static void smallRunQuickSort() {
+        // key: array size, value: # comparisons
+        Map<Integer, Integer> comparisonsOverview = new TreeMap<>();
+
+        int[] data = generateRandomArray(50);
+        int comparisons = QuickSort.sort(data);
+        System.out.println(comparisons);
+        System.out.println(Arrays.toString(data));
+    }
+
+    private static void runQuickSort() {
+        // key: array size, value: # comparisons
+        Map<Integer, Integer> comparisonsOverview = new TreeMap<>();
+
+        for (int i = 5; i < 10000; i+=50) {
+            List<Integer> allComparisons = new ArrayList<>();
+
+            for (int j = 0; j < 100; j++) {
+                int[] data = generateRandomArray(i);
+                int comparisons = QuickSort.sort(data);
+                allComparisons.add(comparisons);
+            }
+
+            int comparisonsMean = (int)allComparisons
+                    .stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
+
+            comparisonsOverview.put(i, comparisonsMean);
+        }
+
+        String filename = "quicksort";
+
+        CustomFileWriter.write(comparisonsOverview, filename);
+
     }
 }

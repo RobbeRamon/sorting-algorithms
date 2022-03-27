@@ -3,13 +3,13 @@ package com.robberamon.algorithms;
 public class SelectionSort {
     // returns the amount of comparisons that happened
     public static int sort(int[] data) {
-        int comparisons = 0;
+        Comparisons comparisons = new Comparisons();
+
         int length = data.length;
         for (int i = 0; i < length; i++) {
             int min = i;
             for (int j = i + 1; j  < length; j++) {
-                comparisons++;
-                if (data[j] < (data[min])) {
+                if (HelperMethods.less(data[j], (data[min]), comparisons)) {
                     min = j;
                 }
             }
@@ -17,6 +17,7 @@ public class SelectionSort {
             data[i] = data[min];
             data[min] = elem;
         }
-        return comparisons;
+
+        return comparisons.getComparisons();
     }
 }

@@ -3,7 +3,8 @@ package com.robberamon.algorithms;
 import java.util.Random;
 
 public class HelperMethods {
-    public static boolean less(Integer v, Integer w) {
+    public static boolean less(Integer v, Integer w, Comparisons comparisons) {
+        comparisons.increaseComparisons();
         return v.compareTo(w) < 0;
     }
 
